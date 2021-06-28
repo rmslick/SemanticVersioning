@@ -28,4 +28,31 @@ if not currentBranchType in branchTypes:
     print("[ERROR] Branch name not follow naming conventions.\n[HINT] Non master/develop branches must include hyphen.\n[HINT] Must follow [branchtype]-[descriptivename] format")
     print("[ABORT] Aborting. Commit not created.")
     sys.exit(1)
+currentBranchName = out("git rev-parse --abbrev-ref HEAD")
+sys.stdin = open('/dev/tty')
+if currentBranchName == "develop":
+    update = input("Update version? (y/n)")
+    if update == "y":
+        vType = input("Version change (r,f,p):")
+        versionFile = open("version.txt","r")
+        version = versionFile.readlines()[0].strip()
+        majMinFeat = version.split('.')
+        if vType == "r":
+            majMinFeat[0] = str(int(majMinFeat[0]) + 1)
+            majMinFeat[1] = "0"
+            majMinFeat[2] = "0"
+            versionFile.write('.'.join(majMinFeat))
+            versionFile.close()
+        elif vType == "f":
+            majMinFeat[1] = str(int(majMinFeat[1]) + 1)
+            versionFile.write('.'.join(majMinFeat))
+            versionFile.close()
+        elif vType == "p":
+            majMinFeat[2] = str(int(majMinFeat[2]) + 1)
+            versionFile.write('.'.join(majMinFeat))
+            versionFile.close()    
+            majMinFeat[2] = str(int(majMinFeat[2]) + 1)
+        else:
+            print("[WARN] Invalid input, version not changed.")
+            versionFile.close()
 sys.exit(0)
