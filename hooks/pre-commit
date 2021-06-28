@@ -29,6 +29,9 @@ if not currentBranchType in branchTypes:
     print("[ABORT] Aborting. Commit not created.")
     sys.exit(1)
 currentBranchName = out("git rev-parse --abbrev-ref HEAD")
+# Works on mac/linux only
+# from here: https://courses.csail.mit.edu/6.S194/13/lessons/03-git/adding-custom-hooks-to-git.html
+# could do: bash input command followed by bash read command as substitute to get user input
 sys.stdin = open('/dev/tty')
 if currentBranchName == "develop":
     update = input("Update version? (y/n)")
@@ -36,6 +39,8 @@ if currentBranchName == "develop":
         vType = input("Version change (r,f,p):")
         versionFile = open("version.txt","r")
         version = versionFile.readlines()[0].strip()
+        versionFile.close()
+        versionFile = open("version.txt","w")
         majMinFeat = version.split('.')
         if vType == "r":
             majMinFeat[0] = str(int(majMinFeat[0]) + 1)
