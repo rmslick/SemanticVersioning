@@ -4,3 +4,8 @@ import sys
 def out(command):
     result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
     return (result.stdout).strip()
+
+# get the most recent commit message,
+commitMessageFile = open(sys.argv[1])
+commitMessage = commitMessageFile.read().strip()
+print("[INFO] echoing commit message: " + commitMessage)
