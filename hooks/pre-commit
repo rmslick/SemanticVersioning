@@ -48,15 +48,17 @@ if currentBranchName == "develop":
             majMinFeat[2] = "0"
             versionFile.write('.'.join(majMinFeat))
             versionFile.close()
+            out('git add version.txt')
         elif vType == "f":
             majMinFeat[1] = str(int(majMinFeat[1]) + 1)
             versionFile.write('.'.join(majMinFeat))
             versionFile.close()
+            out('git add version.txt')
         elif vType == "p":
             majMinFeat[2] = str(int(majMinFeat[2]) + 1)
             versionFile.write('.'.join(majMinFeat))
             versionFile.close()    
-            majMinFeat[2] = str(int(majMinFeat[2]) + 1)
+            out('git add version.txt')
         else:
             print("[WARN] Invalid input, version not changed.")
             versionFile.close()
